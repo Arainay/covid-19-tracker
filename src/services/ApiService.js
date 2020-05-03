@@ -3,11 +3,6 @@ const POST = 'POST';
 const PUT = 'PUT';
 const DELETE = 'DELETE';
 
-const JSON_HEADERS = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json'
-};
-
 export default class ApiService {
   constructor() {
     this.baseUrl = 'https://covid19.mathdro.id/api';
@@ -15,11 +10,9 @@ export default class ApiService {
 
   query(url = '', { headers = {}, ...options } = {}) {
     return fetch(`${this.baseUrl}${url}`, {
+      ...this.options,
       ...options,
-      headers: {
-        ...JSON_HEADERS,
-        ...headers
-      }
+      headers
     })
       .then(response => {
         if (response.ok) {
