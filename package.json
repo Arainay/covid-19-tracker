@@ -8,6 +8,7 @@
     "analyze": "webpack --config webpack.analyze.js"
   },
   "dependencies": {
+    "@material-ui/core": "^4.9.12",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
