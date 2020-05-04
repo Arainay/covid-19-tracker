@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ServiceContext } from '@app/services';
+import Cards from '@app/components/Cards';
+import Countries from '@app/components/Counries';
+import Chart from '@app/components/Chart';
 import './app.scss';
 
 const App = () => {
@@ -9,10 +12,10 @@ const App = () => {
   useEffect(() => {
     covidService.getInfo()
       .then(info => {
+        console.log(info);
         setInfo(info);
       })
       .catch(error => {
-        // eslint-disable-next-line no-console
         console.log(error);
       });
   }, []);
@@ -22,7 +25,11 @@ const App = () => {
   }
 
   return (
-    <h1>App</h1>
+    <div className="wrapper">
+      <Cards/>
+      <Countries/>
+      <Chart/>
+    </div>
   );
 };
 
