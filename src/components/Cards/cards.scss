@@ -6,4 +6,16 @@
   @media (min-width: 500px) {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  &__infected {
+    border-bottom: 10px solid rgba(0, 0, 255, .5);
+  }
+
+  &__recovered {
+    border-bottom: 10px solid rgba(0, 255, 0, .5);
+  }
+
+  &__deaths {
+    border-bottom: 10px solid rgba(255, 0, 0, .5);
+  }
 }

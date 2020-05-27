@@ -2,8 +2,8 @@ import React from 'react';
 import CountUp from 'react-countup';
 import { Card, CardContent, Typography } from '@material-ui/core';
 
-const CardsItem = ({ title, count, date, description }) => (
-  <Card>
+const CardsItem = ({ className, title, count, date, description }) => (
+  <Card className={className}>
     <CardContent>
       <Typography color="textSecondary" gutterBottom>
         {title}
