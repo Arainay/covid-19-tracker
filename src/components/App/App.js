@@ -3,6 +3,7 @@ import { ServiceContext } from '@app/services';
 import Cards from '@app/components/Cards';
 import Countries from '@app/components/Counries';
 import Chart from '@app/components/Chart';
+import Loading from '@app/components/Loading';
 import './app.scss';
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
   }, []);
 
   if (info === null) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (
