@@ -25,9 +25,16 @@ const App = () => {
     return <Loading/>;
   }
 
+  const { confirmed, deaths, recovered, lastUpdate } = info;
+
   return (
     <div className="wrapper">
-      <Cards/>
+      <Cards
+        infectedCount={confirmed.value}
+        deathsCount={deaths.value}
+        recoveredCount={recovered.value}
+        date={new Intl.DateTimeFormat().format(Date.parse(lastUpdate))}
+      />
       <Countries/>
       <Chart/>
     </div>
