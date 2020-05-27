@@ -2,5 +2,13 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-size: 16px;
+}
+
+* {
   box-sizing: border-box;
+}
+
+.wrapper {
+  padding: 1rem;
 }
