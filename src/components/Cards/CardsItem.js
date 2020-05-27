@@ -1,4 +1,5 @@
 import React from 'react';
+import CountUp from 'react-countup';
 import { Card, CardContent, Typography } from '@material-ui/core';
 
 const CardsItem = ({ title, count, date, description }) => (
@@ -8,7 +9,7 @@ const CardsItem = ({ title, count, date, description }) => (
         {title}
       </Typography>
       <Typography variant="h5">
-        {new Intl.NumberFormat().format(count)}
+        <CountUp start={0} end={count} duration={2} separator=" "/>
       </Typography>
       <Typography color="textSecondary">
         {date}
