@@ -10,18 +10,18 @@ export default class CovidService extends ApiService {
   }
 
   getCountryByName(name) {
-    return this.get(`/counties/${name}`);
+    return this.get(`/countries/${name}`);
   }
 
   getConfirmed() {
     return this.get('/confirmed');
   }
 
-  getDaily() {
-    return this.get('/daily');
-  }
-
   getRecovered() {
     return this.get('/recovered');
+  }
+
+  getDaily() {
+    return this.get('/daily');
   }
 }

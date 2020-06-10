@@ -1,22 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { FormControl, NativeSelect } from '@material-ui/core';
 import { ServiceContext } from '@app/services';
+import './countries.scss';
 
-const Countries = () => {
-  // eslint-disable-next-line no-unused-vars
+const Countries = ({ currentCountry, updateCurrentCountry }) => {
   const [countries, setCountries] = useState([]);
 
   const { covidService } = useContext(ServiceContext);
 
+  const changeCountry = event => {
+    updateCurrentCountry(event.target.value);
+  };
+
   useEffect(() => {
     covidService.getCountries()
-      .then(countries => {
-        console.log(countries);
+      .then(({ countries }) => {
         setCountries(countries);
       });
   }, []);
 
   return (
-    <h1>Countries</h1>
+    <FormControl className="countries">
+      <NativeSelect onChange={changeCountry} value={currentCountry ?? ''}>
+        <option value="global">Global</option>
+        {countries.map(item => (
+          <option
+            key={item.name}
+            value={item.name}
+          >
+            {item.name}
+          </option>
+        ))}
+      </NativeSelect>
+    </FormControl>
   );
 };
 
