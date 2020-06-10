@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import { ServiceContext } from '@app/services';
 
 const initialChartData = {
@@ -27,7 +27,7 @@ const initialChartData = {
   ]
 };
 
-const Chart = () => {
+const Chart = ({ country, data }) => {
   const [dailyStatus, setDailyStatus] = useState([]);
   const { covidService } = useContext(ServiceContext);
 
@@ -37,6 +37,30 @@ const Chart = () => {
         setDailyStatus(status);
       });
   }, []);
+
+  if (country) {
+    const { confirmed, recovered, deaths } = data;
+
+    return (
+      <Bar
+        data={{
+          labels: ['Infected', 'Recovered', 'Deaths'],
+          datasets: [{
+            label: 'People',
+            backgroundColor: ['rgba(0, 0, 255, .5)', 'rgba(0, 255, 0, .5)', 'rgba(255, 0, 0, .5)'],
+            data: [confirmed, recovered, deaths]
+          }]
+        }}
+        options={{
+          legend: { display: false },
+          title: {
+            display: true,
+            text: `Current state in ${country}`
+          }
+        }}
+      />
+    );
+  }
 
   return (
     <Line data={dailyStatus.reduce((acc, item) => {
