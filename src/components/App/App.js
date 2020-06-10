@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ServiceContext } from '@app/services';
 import Cards from '@app/components/Cards';
 import Countries from '@app/components/Counries';
-// eslint-disable-next-line no-unused-vars
 import Chart from '@app/components/Chart';
 import Loading from '@app/components/Loading';
 import './app.scss';
@@ -12,27 +11,40 @@ const App = () => {
   const [country, setCountry] = useState(null);
   const { covidService } = useContext(ServiceContext);
 
-  useEffect(() => {
-    covidService.getInfo()
-      .then(info => {
-        setInfo(info);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  const getInfo = async (country) => {
+    let info = null;
 
-  const updateCountry = country => {
-    if (!country) {
+    try {
+      if (country) {
+        info = await covidService.getCountryByName(country.toLowerCase());
+      } else {
+        info = await covidService.getInfo();
+      }
+
+      return { info, country: country ?? null };
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateCountry = async newCountry => {
+    if (!newCountry) {
       return;
     }
 
-    covidService.getCountryByName(country.toLowerCase())
-      .then(info => {
-        setInfo(info);
-        setCountry(country);
-      });
+    const { info, country } = await getInfo(newCountry === 'global' ? null : newCountry);
+
+    setInfo(info);
+    setCountry(country);
   };
+
+  useEffect(() => {
+    getInfo()
+      .then(({ info }) => {
+        setInfo(info);
+        setCountry(null);
+      });
+  }, []);
 
   if (info === null) {
     return <Loading/>;
@@ -49,7 +61,14 @@ const App = () => {
         date={new Intl.DateTimeFormat().format(Date.parse(lastUpdate))}
       />
       <Countries currentCountry={country} updateCurrentCountry={updateCountry}/>
-      {/*<Chart/>*/}
+      <Chart
+        country={country}
+        data={{
+          confirmed: confirmed.value,
+          recovered: recovered.value,
+          deaths: deaths.value
+        }}
+      />
     </div>
   );
 };
